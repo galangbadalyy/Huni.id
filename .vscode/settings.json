@@ -1,0 +1,16 @@
+{
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 800,
+
+  "prettier.requireConfig": true,
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  }
+}

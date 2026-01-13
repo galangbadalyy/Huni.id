@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Properti - Huni.id</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#2563eb',
+                        'brand-dark': '#1d4ed8',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="../public/img/logo.png" class="h-8 w-auto object-contain" alt="Huni.id" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-brand">Huni.id</span>
+                </a>
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="text-slate-500 hover:text-brand text-sm font-medium">Beranda</a>
+                    <a href="index.html#sewa" class="text-brand font-medium text-sm">Cari Properti</a>
+                    <a href="login.html" class="px-4 py-2 text-sm font-medium text-brand border border-brand rounded-lg hover:bg-brand hover:text-white transition">Masuk</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <nav class="flex mb-6 text-sm text-slate-500">
+            <a href="index.html" class="hover:text-brand">Beranda</a>
+            <span class="mx-2">/</span>
+            <span id="breadcrumbLocation">Properti</span>
+            <span class="mx-2">/</span>
+            <span class="text-slate-800 font-medium" id="breadcrumbName">Loading...</span>
+        </nav>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 h-[300px] md:h-[400px] rounded-xl overflow-hidden mb-8">
+            <div class="md:col-span-2 h-full relative group cursor-pointer">
+                <img id="mainImage" src="" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition"></div>
+            </div>
+            <div class="hidden md:flex flex-col gap-2 h-full">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80" class="h-1/2 object-cover hover:opacity-90 cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1484154218962-a1c002085d2f?w=400&q=80" class="h-1/2 object-cover hover:opacity-90 cursor-pointer">
+            </div>
+            <div class="hidden md:flex flex-col gap-2 h-full relative">
+                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80" class="h-1/2 object-cover hover:opacity-90 cursor-pointer">
+                <div class="h-1/2 relative cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=400&q=80" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-slate-900/50 flex items-center justify-center text-white font-medium group-hover:bg-slate-900/40 transition">
+                        +5 Foto Lainnya
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="lg:col-span-2">
+                <div class="mb-6 pb-6 border-b border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h1 id="propTitle" class="text-3xl font-bold text-slate-900 mb-2">Loading...</h1>
+                            <p class="text-slate-500 text-lg"><i class="fas fa-map-marker-alt text-brand mr-2"></i> <span id="propLocation">Loading...</span></p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="p-2 rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-red-500 transition"><i class="fas fa-heart"></i></button>
+                            <button class="p-2 rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-brand transition"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 mb-8 text-slate-700 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="flex items-center gap-2"><i class="fas fa-bed text-xl text-brand"></i> <span id="propBed" class="font-bold">0</span> <span class="text-sm">Kamar</span></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-bath text-xl text-brand"></i> <span id="propBath" class="font-bold">0</span> <span class="text-sm">Mandi</span></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-car text-xl text-brand"></i> <span id="propGarage" class="font-bold">0</span> <span class="text-sm">Parkir</span></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-ruler-combined text-xl text-brand"></i> <span id="propSize" class="font-bold">0</span> <span class="text-sm">m²</span></div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Deskripsi Properti</h3>
+                    <p id="propDesc" class="text-slate-600 leading-relaxed mb-4">
+                        Loading description...
+                    </p>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Fasilitas Utama</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="flex items-center gap-3 text-slate-600"><i class="fas fa-wifi text-brand w-5"></i> Free WiFi</div>
+                        <div class="flex items-center gap-3 text-slate-600"><i class="fas fa-swimming-pool text-brand w-5"></i> Kolam Renang</div>
+                        <div class="flex items-center gap-3 text-slate-600"><i class="fas fa-dumbbell text-brand w-5"></i> Gym Center</div>
+                        <div class="flex items-center gap-3 text-slate-600"><i class="fas fa-snowflake text-brand w-5"></i> AC</div>
+                        <div class="flex items-center gap-3 text-slate-600"><i class="fas fa-parking text-brand w-5"></i> Parkir Luas</div>
+                        <div class="flex items-center gap-3 text-slate-600"><i class="fas fa-shield-alt text-brand w-5"></i> Keamanan 24J</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-6 sticky top-24">
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <p class="text-sm text-slate-500 mb-1">Harga Sewa</p>
+                            <h2 id="propPrice" class="text-3xl font-bold text-brand">Rp 0</h2>
+                        </div>
+                        <span class="text-slate-500 mb-1">/ tahun</span>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="p-3 bg-blue-50 rounded-lg border border-blue-100 flex gap-3 items-start">
+                            <i class="fas fa-info-circle text-brand mt-1"></i>
+                            <p class="text-xs text-blue-800 leading-relaxed">
+                                Harga belum termasuk deposit dan biaya maintenance bulanan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <a href="login.html" class="block w-full text-center bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5">
+                        <i class="fas fa-lock mr-2"></i> Login untuk Menyewa
+                    </a>
+                    
+                    <p class="text-center text-xs text-slate-400 mt-4">
+                        Anda harus masuk akun untuk melakukan pemesanan.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2025 Huni.id. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Database Properti (Sama dengan user_index)
+        const propertyDatabase = {
+            'apartemen': {
+                name: "Modern Apartment Margonda",
+                location: "Margonda, Depok",
+                price: "Rp 400 Jt",
+                image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+                beds: 2, baths: 1, garage: 1, size: 45,
+                desc: "Nikmati hunian vertikal modern di pusat kota Depok. Akses langsung ke pusat perbelanjaan dan hanya 5 menit jalan kaki ke stasiun UI. Dilengkapi smart home system, keamanan biometrik, dan pemandangan kota yang menakjubkan di malam hari."
+            },
+            'villa': {
+                name: "Luxury Villa Kemang",
+                location: "Kemang, Jakarta Selatan",
+                price: "Rp 1.2 M",
+                image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80",
+                beds: 4, baths: 3, garage: 2, size: 350,
+                desc: "Villa mewah bergaya tropis di jantung Kemang. Private pool luas, taman asri, dan keamanan 24 jam. Sangat cocok untuk ekspatriat atau keluarga besar yang menginginkan ketenangan di tengah hiruk pikuk Jakarta Selatan."
+            },
+            'rumah': {
+                name: "Green House BSD City",
+                location: "BSD City, Tangerang",
+                price: "Rp 850 Jt",
+                image: "https://images.unsplash.com/photo-1484154218962-a1c002085d2f?w=800&q=80",
+                beds: 3, baths: 2, garage: 1, size: 120,
+                desc: "Rumah minimalis modern dalam cluster eksklusif di BSD. Lingkungan hijau, row jalan lebar, dan dekat dengan akses tol serta sekolah internasional. Desain Scandinavian yang memaksimalkan cahaya alami dan sirkulasi udara."
+            }
+        };
+
+        // Ambil ID dari URL (Contoh: detail_property.html?id=apartemen)
+        function getPropertyId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Default 'apartemen' jika link dibuka langsung tanpa ID
+            return urlParams.get('id') || 'apartemen'; 
+        }
+
+        // Render Data ke HTML
+        function loadPropertyData() {
+            const id = getPropertyId();
+            const data = propertyDatabase[id];
+
+            if (data) {
+                // Update Text Content
+                document.title = data.name + " - Huni.id";
+                document.getElementById('propTitle').innerText = data.name;
+                document.getElementById('propLocation').innerText = data.location;
+                document.getElementById('propPrice').innerText = data.price;
+                document.getElementById('propDesc').innerText = data.desc;
+                
+                // Update Specs
+                document.getElementById('propBed').innerText = data.beds;
+                document.getElementById('propBath').innerText = data.baths;
+                document.getElementById('propGarage').innerText = data.garage;
+                document.getElementById('propSize').innerText = data.size;
+
+                // Update Images
+                document.getElementById('mainImage').src = data.image;
+                
+                // Update Breadcrumb
+                document.getElementById('breadcrumbName').innerText = data.name;
+            }
+        }
+
+        // Jalankan saat halaman siap
+        window.onload = loadPropertyData;
+    </script>
+</body>
+</html>

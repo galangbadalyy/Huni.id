@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* Theme Flowbite (pilih satu saja) */
+@import "flowbite/src/themes/default";
+
+/* Plugin Flowbite */
+@plugin "flowbite/plugin";
+
+/* Source scan Flowbite */
+@source "../../node_modules/flowbite";

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RentHouse - Register</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../dist/css/output.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body class="bg-slate-50">
+    <div class="flex min-h-screen">
+      <!-- Left Side - Brand & Graphics -->
+      <div class="gradient-bg hidden justify-center p-12 lg:flex lg:w-1/2">
+        <div class="fade-in text-center text-white">
+          <div class="mb-8">
+            <a href="index.html">
+              <img
+                src="../public/img/logo.png"
+                alt="Huni.id Logo"
+                class="mx-auto h-24 w-auto object-contain sm:h-28 lg:h-32"
+              />
+            </a>
+            <p class="mb-12 text-xl text-blue-100">Temukan Rumah Impian Anda Hari Ini</p>
+          </div>
+
+          <div class="mb-12 grid grid-cols-3 gap-8">
+            <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+              <i class="fas fa-home mb-4 block text-4xl"></i>
+              <p class="text-sm">50,000+ Properti</p>
+            </div>
+            <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+              <i class="fas fa-users mb-4 block text-4xl"></i>
+              <p class="text-sm">100,000+ Pengguna</p>
+            </div>
+            <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+              <i class="fas fa-star mb-4 block text-4xl"></i>
+              <p class="text-sm">Rating 4.9/5</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+            <p class="text-sm italic">
+              "Huni.id membuat pencarian apartemen saya begitu mudah dan tanpa stres!"
+            </p>
+            <p class="mt-4 text-sm">- Zul Fikri Hasibuan, New York</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Auth Forms -->
+      <div class="flex w-full items-center justify-center p-6 sm:p-12 lg:w-1/2">
+        <div class="w-full max-w-md">
+          <!-- Form Toggle Buttons -->
+          <div class="mb-8 flex gap-4 rounded-lg bg-slate-100 p-1">
+            <!-- Login (INACTIVE) -->
+            <a
+              href="login.html"
+              id="loginTab"
+              class="flex-1 rounded-md py-3 text-center font-semibold text-slate-600 transition duration-300 hover:bg-slate-200"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Masuk
+            </a>
+
+            <!-- Register (Active) -->
+            <a
+              href="register.html"
+              id="registerTab"
+              class="flex-1 rounded-md bg-blue-600 py-3 text-center font-semibold text-white transition duration-300 hover:bg-blue-700"
+            >
+              <i class="fas fa-user-plus mr-2"></i>
+              Daftar
+            </a>
+          </div>
+
+          <!-- Register Form -->
+          <div id="registerForm" class="form-toggle fade-in">
+            <h2 class="mb-2 text-3xl font-bold text-slate-900">Buat Akun</h2>
+            <p class="mb-8 text-slate-600">
+              Bergabunglah dengan RentHouse dan temukan rumah impian Anda
+            </p>
+            <form id="registerFormElement">
+              <!-- Full Name -->
+              <div class="mb-6">
+                <label class="mb-2 block font-semibold text-slate-700">Nama Lengkap</label>
+                <div class="relative">
+                  <i class="fas fa-user absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="text"
+                    id="registerName"
+                    placeholder="John Doe"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-4 pl-12"
+                    required
+                  />
+                </div>
+                <div class="error-message" id="registerNameError"></div>
+              </div>
+
+              <!-- Email Input -->
+              <div class="mb-6">
+                <label class="mb-2 block font-semibold text-slate-700">Alamat Email</label>
+                <div class="relative">
+                  <i class="fas fa-envelope absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="anda@contoh.com"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-4 pl-12"
+                    required
+                  />
+                </div>
+                <div class="error-message" id="registerEmailError"></div>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="mb-6">
+                <label class="mb-2 block font-semibold text-slate-700">Nomor Telepon</label>
+                <div class="relative">
+                  <i class="fas fa-phone absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="tel"
+                    id="registerPhone"
+                    placeholder="+62 (555) 000-0000"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-4 pl-12"
+                    required
+                  />
+                </div>
+                <div class="error-message" id="registerPhoneError"></div>
+              </div>
+
+              <!-- Password -->
+              <div class="mb-6">
+                <label class="mb-2 block font-semibold text-slate-700">Kata Sandi</label>
+                <div class="relative">
+                  <i class="fas fa-lock absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Minimal 8 karakter"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-12 pl-12"
+                    required
+                  />
+                  <i class="fas fa-eye password-toggle absolute top-4 right-4"></i>
+                </div>
+                <div class="error-message" id="registerPasswordError"></div>
+                <!-- Password Strength -->
+                <div class="mt-2">
+                  <div class="mb-1 flex gap-1">
+                    <div id="strength1" class="h-1 flex-1 rounded bg-slate-200"></div>
+                    <div id="strength2" class="h-1 flex-1 rounded bg-slate-200"></div>
+                    <div id="strength3" class="h-1 flex-1 rounded bg-slate-200"></div>
+                  </div>
+                  <p id="strengthText" class="text-xs text-slate-600">Kekuatan kata sandi: Lemah</p>
+                </div>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="mb-6">
+                <label class="mb-2 block font-semibold text-slate-700">Konfirmasi Kata Sandi</label>
+                <div class="relative">
+                  <i class="fas fa-lock absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="password"
+                    id="registerConfirmPassword"
+                    placeholder="Konfirmasi kata sandi Anda"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-12 pl-12"
+                    required
+                  />
+                  <i class="fas fa-eye password-toggle absolute top-4 right-4"></i>
+                </div>
+                <div class="error-message" id="registerConfirmPasswordError"></div>
+              </div>
+
+              <!-- Terms & Conditions -->
+              <label class="mb-6 flex items-start text-sm text-slate-600">
+                <input
+                  type="checkbox"
+                  class="mt-1 mr-3 h-4 w-4 rounded"
+                  id="termsCheckbox"
+                  required
+                />
+                <span
+                  >I agree to the
+                  <a href="#" class="font-semibold text-blue-600 hover:underline"
+                    >Terms & Conditions</a
+                  >
+                  and
+                  <a href="#" class="font-semibold text-blue-600 hover:underline"
+                    >Privacy Policy</a
+                  ></span
+                >
+              </label>
+
+              <!-- Register Button -->
+              <button
+                type="submit"
+                class="btn-gradient mb-4 w-full rounded-lg py-3 font-bold text-white"
+              >
+                <i class="fas fa-user-plus mr-2"></i>Create Account
+              </button>
+            </form>
+
+            <!-- Social Register -->
+            <div class="divider">
+              <span>or signup with</span>
+            </div>
+
+            <div class="mb-6 grid grid-cols-3 gap-4">
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-google text-xl text-red-500"></i>
+              </button>
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-facebook text-xl text-blue-600"></i>
+              </button>
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-github text-xl text-slate-900"></i>
+              </button>
+            </div>
+
+            <!-- Switch to Login -->
+            <p class="text-center text-slate-600">
+              Already have an account?
+              <button type="button" class="font-bold text-blue-600 hover:text-blue-700">
+                Sign in
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
+  </body>
+</html>

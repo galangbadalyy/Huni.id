@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Huni.id</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Style */
+        .sidebar {
+            background-color: #1e293b; /* Dark Blue Slate */
+            min-height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .sidebar .logo-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 10px;
+        }
+
+        .sidebar .nav-link {
+            color: #94a3b8;
+            padding: 12px 20px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+            border-left-color: #3b82f6; /* Brand Blue */
+        }
+
+        .sidebar i { width: 25px; }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .top-navbar {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            padding: 15px 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .icon-box {
+            width: 45px; height: 45px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+        .bg-light-primary { background: #e0f2fe; color: #0284c7; }
+        .bg-light-warning { background: #fef3c7; color: #d97706; }
+        .bg-light-success { background: #dcfce7; color: #16a34a; }
+        .bg-light-danger  { background: #fee2e2; color: #dc2626; }
+
+        /* Table */
+        .table-custom thead th {
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .table-custom tbody td {
+            vertical-align: middle;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .sidebar { margin-left: -250px; }
+            .sidebar.active { margin-left: 0; }
+            .main-content { margin-left: 0; }
+        }
+
+        /* Tab Logic */
+        .tab-section { display: none; animation: fadeIn 0.4s; }
+        .tab-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar" id="sidebar">
+        <div class="logo-section d-flex align-items-center gap-2">
+            <img src="../public/img/logo.png" style="height: 30px;" onerror="this.style.display='none'"> 
+            <h4 class="text-white m-0 fw-bold">Huni<span class="text-primary">.id</span></h4>
+        </div>
+        <ul class="nav flex-column mt-2">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="switchTab('dashboard', this)">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="switchTab('bookings', this)">
+                    <i class="fas fa-calendar-check"></i> Booking Masuk
+                    <span class="badge bg-warning text-dark ms-auto float-end" id="sidebarBadge">1</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="switchTab('properties', this)">
+                    <i class="fas fa-building"></i> Data Properti
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="switchTab('users', this)">
+                    <i class="fas fa-users"></i> Pengguna
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a class="nav-link text-danger" href="index.html">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="top-navbar d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light d-md-none me-3" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <h5 class="m-0 fw-bold text-secondary" id="pageTitle">Dashboard Overview</h5>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="dropdown">
+                    <button class="btn btn-white position-relative" type="button">
+                        <i class="far fa-bell fa-lg text-secondary"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-white">
+                            1
+                        </span>
+                    </button>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <img src="https://ui-avatars.com/api/?name=Admin+Huni&background=0D8ABC&color=fff" class="rounded-circle" width="35">
+                    <div class="d-none d-md-block lh-1">
+                        <small class="text-muted d-block" style="font-size: 11px;">Selamat Datang,</small>
+                        <span class="fw-bold text-dark">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="tab-section active">
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card stat-card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small text-uppercase fw-bold">Pending Booking</p>
+                                <h3 class="fw-bold text-dark mb-0" id="statPending">1</h3> 
+                            </div>
+                            <div class="icon-box bg-light-warning"><i class="fas fa-clock"></i></div>
+                        </div>
+                        <small class="text-danger mt-2 d-block"><i class="fas fa-arrow-up"></i> Perlu konfirmasi segera</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small text-uppercase fw-bold">Total Aktif</p>
+                                <h3 class="fw-bold text-dark mb-0">24</h3>
+                            </div>
+                            <div class="icon-box bg-light-success"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        <small class="text-success mt-2 d-block"><i class="fas fa-arrow-up"></i> +2 minggu ini</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small text-uppercase fw-bold">Pendapatan</p>
+                                <h3 class="fw-bold text-dark mb-0">Rp 450 Jt</h3>
+                            </div>
+                            <div class="icon-box bg-light-primary"><i class="fas fa-wallet"></i></div>
+                        </div>
+                        <small class="text-success mt-2 d-block"><i class="fas fa-chart-line"></i> +12% dari bulan lalu</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card p-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small text-uppercase fw-bold">Total Properti</p>
+                                <h3 class="fw-bold text-dark mb-0">12</h3>
+                            </div>
+                            <div class="icon-box bg-light-danger"><i class="fas fa-home"></i></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">3 Kosong / 9 Terisi</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card stat-card p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold m-0">Permintaan Sewa Terbaru</h5>
+                    <button class="btn btn-sm btn-outline-primary" onclick="switchTab('bookings')">Lihat Semua</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover" id="dashboardTable">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Penyewa</th>
+                                <th>Properti</th>
+                                <th>Durasi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="row-andini">
+                                <td><span class="text-primary fw-bold">#BK-2025-001</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="https://ui-avatars.com/api/?name=Andini+Putri&background=random" class="rounded-circle" width="30">
+                                        <div>
+                                            <span class="d-block fw-bold text-dark">Andini Putri</span>
+                                            <small class="text-muted">Baru saja</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="d-block text-dark fw-medium">Modern Apt Margonda</span>
+                                    <small class="text-muted"><i class="fas fa-map-marker-alt"></i> Depok</small>
+                                </td>
+                                <td>1 Tahun</td>
+                                <td>
+                                    <span class="badge bg-warning text-dark status-badge">Menunggu Konfirmasi</span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-success me-1" onclick="approveBooking('row-andini')" title="Terima"><i class="fas fa-check"></i></button>
+                                        <button class="btn btn-sm btn-danger" title="Tolak"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="text-primary fw-bold">#BK-2024-880</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="https://ui-avatars.com/api/?name=Budi+Santoso&background=random" class="rounded-circle" width="30">
+                                        <div><span class="d-block fw-bold text-dark">Budi Santoso</span></div>
+                                    </div>
+                                </td>
+                                <td>Green House BSD</td>
+                                <td>2 Tahun</td>
+                                <td><span class="badge bg-success">Aktif</span></td>
+                                <td><button class="btn btn-sm btn-light border"><i class="fas fa-eye"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 mb-4">
+                    <div class="card stat-card p-4">
+                        <h5 class="fw-bold mb-4">Statistik Pendapatan</h5>
+                        <canvas id="revenueChart" height="120"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card stat-card p-4">
+                        <h5 class="fw-bold mb-4">Tipe Properti</h5>
+                        <canvas id="propertyChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="bookings" class="tab-section">
+            <h4 class="fw-bold mb-4">Kelola Semua Booking</h4>
+            <div class="card stat-card p-4">
+                <div class="alert alert-info border-0 bg-light-primary d-flex align-items-center">
+                    <i class="fas fa-info-circle me-2 fs-5"></i>
+                    <div>Anda memiliki <strong>1 Permintaan Baru</strong> yang perlu ditinjau.</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Properti</th>
+                                <th>Tanggal</th>
+                                <th>Nilai Transaksi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="row-andini-2">
+                                <td>#BK-001</td>
+                                <td>Andini Putri</td>
+                                <td>Modern Apartment Margonda</td>
+                                <td>12 Jan 2025</td>
+                                <td class="fw-bold text-primary">Rp 400.000.000</td>
+                                <td><span class="badge bg-warning text-dark status-badge">Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-success" onclick="approveBooking('row-andini-2')">Approve</button>
+                                        <button class="btn btn-sm btn-danger">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="properties" class="tab-section">
+            <h4 class="fw-bold mb-4">Database Properti</h4>
+            <div class="card stat-card p-5 text-center text-muted">
+                <i class="fas fa-tools fa-3x mb-3"></i>
+                <p>Halaman manajemen properti (CRUD) akan tampil di sini.</p>
+            </div>
+        </div>
+        <div id="users" class="tab-section">
+            <h4 class="fw-bold mb-4">Data Pengguna</h4>
+            <div class="card stat-card p-5 text-center text-muted">
+                <i class="fas fa-users-cog fa-3x mb-3"></i>
+                <p>Halaman manajemen user akan tampil di sini.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 1. Fungsi Ganti Tab
+        function switchTab(tabId, element) {
+            // Sembunyikan semua tab
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+            // Tampilkan tab yang dipilih
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update Sidebar Active State
+            if(element) {
+                document.querySelectorAll('.sidebar .nav-link').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+            }
+
+            // Update Judul Halaman
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'bookings': 'Manajemen Booking',
+                'properties': 'Data Properti',
+                'users': 'Data Pengguna'
+            };
+            document.getElementById('pageTitle').innerText = titles[tabId];
+        }
+
+        // 2. Fungsi Toggle Sidebar (Mobile)
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // 3. FUNGSI APPROVE BOOKING (VISUAL ONLY)
+        function approveBooking(rowId) {
+            // Kita ubah tampilan di Dashboard & Tab Booking sekaligus biar konsisten
+            const idsToUpdate = ['row-andini', 'row-andini-2'];
+
+            idsToUpdate.forEach(id => {
+                const row = document.getElementById(id);
+                if(row) {
+                    // Update Badge Status
+                    const badge = row.querySelector('.status-badge');
+                    badge.className = 'badge bg-success text-white status-badge';
+                    badge.innerHTML = '<i class="fas fa-check-circle me-1"></i> Aktif';
+
+                    // Hilangkan Tombol Aksi
+                    const actions = row.querySelector('.action-buttons');
+                    actions.innerHTML = '<span class="text-muted small fw-bold">Disetujui</span>';
+                }
+            });
+
+            // Update Angka Statistik Pending (Dari 1 jadi 0)
+            document.getElementById('statPending').innerText = '0';
+            // Update Badge di Sidebar
+            document.getElementById('sidebarBadge').style.display = 'none';
+
+            // Tampilkan Alert Sukses
+            alert("Booking berhasil disetujui! Status sewa Andini kini Aktif.");
+        }
+
+        // 4. Inisialisasi Chart (Hiasan)
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctxRev = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctxRev, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                    datasets: [{
+                        label: 'Revenue (Juta)',
+                        data: [150, 230, 180, 320, 290, 450],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+            });
+
+            const ctxProp = document.getElementById('propertyChart').getContext('2d');
+            new Chart(ctxProp, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Apartment', 'Rumah', 'Villa'],
+                    datasets: [{
+                        data: [5, 4, 3],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
+                    }]
+                }
+            });
+        });
+    </script>
+</body>
+</html>

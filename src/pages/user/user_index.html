@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pengguna - Huni.id</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: '#2563eb', // Primary Blue
+                        'brand-soft': '#eff6ff', // Light Blue bg
+                        whatsapp: '#25D366',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; }
+        
+        /* Smooth Fade In */
+        .tab-content { display: none; animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-content.active { display: block; }
+        
+        /* Modern Sidebar Active State */
+        .nav-item { transition: all 0.2s ease; }
+        .nav-item.active {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar Halus */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+
+<body class="text-slate-600 antialiased">
+
+    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">H</div>
+                    <span class="text-xl font-bold text-slate-800 tracking-tight">Huni.id</span> 
+                </a>
+
+                <div class="flex items-center gap-6">
+                    <a href="index.html" class="text-sm font-medium text-slate-500 hover:text-brand transition hidden md:block">Beranda</a>
+                    
+                    <div class="flex items-center gap-3 pl-6 border-l border-slate-200">
+                        <div class="text-right hidden md:block">
+                            <p class="text-sm font-bold text-slate-800">Andini Putri</p>
+                            <p class="text-xs text-slate-400">Member</p>
+                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Andini+Putri&background=2563eb&color=fff"
+                            class="h-10 w-10 rounded-full ring-2 ring-white shadow-sm cursor-pointer hover:ring-brand transition" alt="Profile">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <aside class="w-full lg:w-64 flex-shrink-0">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sticky top-24">
+                    
+                    <div class="flex items-center gap-3 p-3 mb-4 bg-slate-50 rounded-xl">
+                        <img src="https://ui-avatars.com/api/?name=Andini+Putri&background=3b82f6&color=fff" class="h-12 w-12 rounded-full">
+                        <div>
+                            <p class="text-sm font-bold text-slate-900">Andini Putri</p>
+                            <p class="text-xs text-slate-500">Free Account</p>
+                        </div>
+                    </div>
+
+                    <nav class="space-y-1">
+                        <button onclick="switchTab('katalog')" id="btn-katalog" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 active">
+                            <i class="fas fa-home text-lg w-6"></i> Sewa Properti
+                        </button>
+
+                        <button onclick="switchTab('negosiasi')" id="btn-negosiasi" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50">
+                            <div class="relative">
+                                <i class="fas fa-comment-dots text-lg w-6"></i>
+                                <span id="badgeCount" class="hidden absolute -top-1 -right-1 h-2.5 w-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+                            </div>
+                            Status Negosiasi
+                        </button>
+
+                        <button onclick="switchTab('wishlist')" id="btn-wishlist" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50">
+                            <i class="fas fa-heart text-lg w-6"></i> Favorit Saya
+                        </button>
+
+                        <button onclick="switchTab('settings')" id="btn-settings" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50">
+                            <i class="fas fa-cog text-lg w-6"></i> Pengaturan
+                        </button>
+
+                        <div class="pt-4 mt-4 border-t border-slate-100">
+                            <a href="index.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
+                                <i class="fas fa-sign-out-alt text-lg w-6"></i> Keluar
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </aside>
+
+            <main class="flex-1 min-h-[500px]">
+
+                <div id="katalog" class="tab-content active">
+                    <div class="mb-6">
+                        <h1 class="text-2xl font-bold text-slate-800">Temukan Hunian Impian</h1>
+                        <p class="text-slate-500 mt-1">Pilih properti dan hubungi pemilik langsung via WhatsApp.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group overflow-hidden">
+                            <div class="relative h-56 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm uppercase tracking-wide">Apartment</div>
+                                <button class="absolute top-4 right-4 w-8 h-8 bg-white/50 backdrop-blur rounded-full flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition"><i class="far fa-heart"></i></button>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-slate-800 line-clamp-1">Modern Apt Margonda</h3>
+                                        <p class="text-sm text-slate-500"><i class="fas fa-map-marker-alt mr-1"></i> Depok, Jawa Barat</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-brand">Rp 400 Jt</p>
+                                        <p class="text-xs text-slate-400">/ tahun</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 text-xs text-slate-500 my-4 pt-4 border-t border-slate-50">
+                                    <span class="flex items-center gap-1"><i class="fas fa-bed"></i> 2 Bed</span>
+                                    <span class="flex items-center gap-1"><i class="fas fa-bath"></i> 1 Bath</span>
+                                    <span class="flex items-center gap-1"><i class="fas fa-ruler-combined"></i> 45m²</span>
+                                </div>
+                                <button onclick="startNegotiation('Modern Apt Margonda', 'Rp 400 Jt', 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80')" 
+                                    class="w-full bg-slate-900 hover:bg-whatsapp text-white font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                                    <i class="fab fa-whatsapp text-lg"></i> Hubungi Pemilik
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group overflow-hidden">
+                            <div class="relative h-56 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm uppercase tracking-wide">Villa</div>
+                                <button class="absolute top-4 right-4 w-8 h-8 bg-white/50 backdrop-blur rounded-full flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition"><i class="far fa-heart"></i></button>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-slate-800 line-clamp-1">Luxury Villa Kemang</h3>
+                                        <p class="text-sm text-slate-500"><i class="fas fa-map-marker-alt mr-1"></i> Jakarta Selatan</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-brand">Rp 1.2 M</p>
+                                        <p class="text-xs text-slate-400">/ tahun</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 text-xs text-slate-500 my-4 pt-4 border-t border-slate-50">
+                                    <span class="flex items-center gap-1"><i class="fas fa-bed"></i> 4 Bed</span>
+                                    <span class="flex items-center gap-1"><i class="fas fa-bath"></i> 3 Bath</span>
+                                    <span class="flex items-center gap-1"><i class="fas fa-swimming-pool"></i> Pool</span>
+                                </div>
+                                <button onclick="startNegotiation('Luxury Villa Kemang', 'Rp 1.2 M', 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80')" 
+                                    class="w-full bg-slate-900 hover:bg-whatsapp text-white font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                                    <i class="fab fa-whatsapp text-lg"></i> Hubungi Pemilik
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group overflow-hidden">
+                            <div class="relative h-56 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-slate-700 shadow-sm uppercase tracking-wide">House</div>
+                                <button class="absolute top-4 right-4 w-8 h-8 bg-white/50 backdrop-blur rounded-full flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition"><i class="far fa-heart"></i></button>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="font-bold text-lg text-slate-800 line-clamp-1">Green House BSD</h3>
+                                        <p class="text-sm text-slate-500"><i class="fas fa-map-marker-alt mr-1"></i> Tangerang</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-bold text-brand">Rp 850 Jt</p>
+                                        <p class="text-xs text-slate-400">/ tahun</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 text-xs text-slate-500 my-4 pt-4 border-t border-slate-50">
+                                    <span class="flex items-center gap-1"><i class="fas fa-bed"></i> 3 Bed</span>
+                                    <span class="flex items-center gap-1"><i class="fas fa-bath"></i> 2 Bath</span>
+                                    <span class="flex items-center gap-1"><i class="fas fa-car"></i> 1 Gar</span>
+                                </div>
+                                <button onclick="startNegotiation('Green House BSD', 'Rp 850 Jt', 'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?w=800&q=80')" 
+                                    class="w-full bg-slate-900 hover:bg-whatsapp text-white font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2">
+                                    <i class="fab fa-whatsapp text-lg"></i> Hubungi Pemilik
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="negosiasi" class="tab-content">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-800">Status Negosiasi</h1>
+                            <p class="text-slate-500 mt-1">Daftar properti yang sedang Anda hubungi.</p>
+                        </div>
+                        <button onclick="clearNegotiations()" id="clearBtn" class="hidden text-sm text-red-500 hover:text-red-600 font-medium px-4 py-2 hover:bg-red-50 rounded-lg transition">
+                            Hapus Semua
+                        </button>
+                    </div>
+
+                    <div id="emptyState" class="bg-white rounded-2xl border border-slate-100 p-12 text-center shadow-sm">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-comment-slash text-2xl text-slate-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-700">Belum ada negosiasi</h3>
+                        <p class="text-slate-500 mb-6">Anda belum menghubungi pemilik properti manapun.</p>
+                        <button onclick="switchTab('katalog')" class="bg-brand text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                            Cari Properti
+                        </button>
+                    </div>
+
+                    <div id="negotiationList" class="space-y-4">
+                        </div>
+                </div>
+
+                <div id="wishlist" class="tab-content">
+                    <div class="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
+                        <p class="text-slate-400">Halaman Wishlist (Coming Soon)</p>
+                    </div>
+                </div>
+                <div id="settings" class="tab-content">
+                    <div class="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
+                        <p class="text-slate-400">Halaman Pengaturan (Coming Soon)</p>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. TAB SYSTEM ---
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Reset Sidebar Style
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            // Show Target
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 2. LOCAL STORAGE LOGIC ---
+        
+        // Key untuk LocalStorage
+        const STORAGE_KEY = 'huni_negotiations_v1';
+
+        // Load data saat halaman dibuka
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNegotiations();
+        });
+
+        function getNegotiations() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveNegotiations(items) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+            renderNegotiations(); // Re-render UI
+        }
+
+        // --- 3. MAIN FUNCTION: START NEGOTIATION ---
+        function startNegotiation(name, price, image) {
+            const items = getNegotiations();
+
+            // Cek Duplikat
+            const exists = items.find(item => item.name === name);
+            if (exists) {
+                alert(`Anda sudah menghubungi pemilik ${name}. Cek tab 'Status Negosiasi'.`);
+                switchTab('negosiasi');
+                return;
+            }
+
+            // Data Baru
+            const newItem = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                image: image,
+                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                status: 'Menunggu Respon'
+            };
+
+            // Tambahkan ke Array (Paling atas)
+            items.unshift(newItem);
+            saveNegotiations(items);
+
+            // Buka WhatsApp (Simulasi)
+            const phone = "6281234567890";
+            const msg = `Halo, saya tertarik dengan *${name}* (${price}). Apakah masih tersedia?`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+
+            // Pindah Tab Otomatis
+            setTimeout(() => {
+                switchTab('negosiasi');
+            }, 500);
+        }
+
+        // --- 4. RENDER UI ---
+        function renderNegotiations() {
+            const items = getNegotiations();
+            const listContainer = document.getElementById('negotiationList');
+            const emptyState = document.getElementById('emptyState');
+            const clearBtn = document.getElementById('clearBtn');
+            const badgeDot = document.getElementById('badgeCount');
+
+            // Bersihkan Container
+            listContainer.innerHTML = '';
+
+            // Handle Kosong/Isi
+            if (items.length === 0) {
+                emptyState.style.display = 'block';
+                clearBtn.classList.add('hidden');
+                badgeDot.classList.add('hidden');
+            } else {
+                emptyState.style.display = 'none';
+                clearBtn.classList.remove('hidden');
+                badgeDot.classList.remove('hidden');
+
+                // Loop items dan buat HTML Card Clean
+                items.forEach(item => {
+                    const card = `
+                        <div class="bg-white border border-slate-100 rounded-xl p-4 flex flex-col md:flex-row gap-5 shadow-sm hover:shadow-md transition group">
+                            <div class="w-full md:w-40 h-28 bg-slate-200 rounded-lg overflow-hidden flex-shrink-0">
+                                <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            </div>
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-bold text-slate-800 text-lg">${item.name}</h3>
+                                        <span class="bg-green-50 text-green-600 text-xs font-bold px-2.5 py-1 rounded-md border border-green-100 flex items-center gap-1">
+                                            <i class="fab fa-whatsapp"></i> Chat Terkirim
+                                        </span>
+                                    </div>
+                                    <p class="text-brand font-semibold text-sm mt-1">${item.price} <span class="text-slate-400 font-normal">/ tahun</span></p>
+                                </div>
+                                
+                                <div class="flex items-center justify-between pt-3 mt-2 border-t border-slate-50">
+                                    <p class="text-xs text-slate-400">Dihubungi pada: ${item.date}</p>
+                                    <button class="text-sm font-medium text-slate-600 hover:text-brand flex items-center gap-2 transition">
+                                        Lanjut Chat <i class="fas fa-external-link-alt text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    listContainer.insertAdjacentHTML('beforeend', card);
+                });
+            }
+        }
+
+        // --- 5. CLEAR DATA ---
+        function clearNegotiations() {
+            if (confirm("Hapus semua riwayat negosiasi?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                renderNegotiations();
+            }
+        }
+    </script>
+</body>
+</html>

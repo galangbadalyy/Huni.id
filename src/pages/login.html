@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Huni.id - Masuk & Daftar</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../dist/css/output.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body class="bg-slate-50">
+    <div class="flex min-h-screen">
+      <!-- Left Side - Brand & Graphics -->
+      <div class="gradient-bg hidden justify-center p-12 lg:flex lg:w-1/2">
+        <div class="fade-in text-center text-white">
+          <div class="mb-8">
+            <a href="index.html">
+              <img
+                src="../public/img/logo.png"
+                alt="Huni.id Logo"
+                class="mx-auto h-24 w-auto object-contain sm:h-28 lg:h-32"
+              />
+            </a>
+
+            <p class="mb-12 text-xl text-blue-100">Temukan Rumah Impian Anda Hari Ini</p>
+          </div>
+
+          <div class="mb-12 grid grid-cols-3 gap-8">
+            <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+              <i class="fas fa-home mb-4 block text-4xl"></i>
+              <p class="text-sm">50,000+ Properti</p>
+            </div>
+            <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+              <i class="fas fa-users mb-4 block text-4xl"></i>
+              <p class="text-sm">100,000+ Pengguna</p>
+            </div>
+            <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+              <i class="fas fa-star mb-4 block text-4xl"></i>
+              <p class="text-sm">Rating 4.9/5</p>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white/20 p-6 backdrop-blur-md">
+            <p class="text-sm italic">
+              "Huni.id membuat pencarian apartemen saya begitu mudah dan tanpa stres!"
+            </p>
+            <p class="mt-4 text-sm">- Zul Fikri Hasibuan, New York</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Auth Forms -->
+      <div class="flex w-full items-center justify-center p-6 sm:p-12 lg:w-1/2">
+        <div class="w-full max-w-md">
+          <!-- Form Toggle Buttons -->
+          <div class="mb-8 flex gap-4 rounded-lg bg-slate-100 p-1">
+            <!-- Login (ACTIVE) -->
+            <a
+              href="login.html"
+              id="loginTab"
+              class="flex-1 rounded-md bg-blue-600 py-3 text-center font-semibold text-white transition duration-300 hover:bg-blue-700"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Login
+            </a>
+
+            <!-- Register (INACTIVE) -->
+            <a
+              href="register.html"
+              id="registerTab"
+              class="flex-1 rounded-md py-3 text-center font-semibold text-slate-600 transition duration-300 hover:bg-slate-200"
+            >
+              <i class="fas fa-user-plus mr-2"></i>
+              Register
+            </a>
+          </div>
+
+          <!-- Login Form -->
+          <div id="loginForm" class="form-toggle fade-in">
+            <h2 class="mb-2 text-3xl font-bold text-slate-900">Selamat Datang Kembali</h2>
+            <p class="mb-8 text-slate-600">Masuk ke akun Anda untuk melanjutkan</p>
+
+            <form id="loginFormElement">
+              <!-- Email Input -->
+              <div class="mb-6">
+                <label class="mb-2 block font-semibold text-slate-700">Alamat Email</label>
+                <div class="relative">
+                  <i class="fas fa-envelope absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="anda@contoh.com"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-4 pl-12"
+                    required
+                  />
+                </div>
+                <div class="error-message" id="loginEmailError"></div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="mb-2">
+                <label class="mb-2 block font-semibold text-slate-700">Kata Sandi</label>
+                <div class="relative">
+                  <i class="fas fa-lock absolute top-4 left-4 text-slate-400"></i>
+                  <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Masukkan kata sandi Anda"
+                    class="form-input w-full rounded-lg border-2 border-slate-200 py-3 pr-12 pl-12"
+                    required
+                  />
+                  <i class="fas fa-eye password-toggle absolute top-4 right-4"></i>
+                </div>
+                <div class="error-message" id="loginPasswordError"></div>
+              </div>
+
+              <!-- Remember & Forgot -->
+              <div class="mb-6 flex items-center justify-between text-sm">
+                <label class="flex items-center text-slate-700">
+                  <input type="checkbox" class="mr-2 h-4 w-4 rounded" />
+                  Ingat saya
+                </label>
+                <a href="#" class="font-semibold text-blue-600 hover:text-blue-700"
+                  >Lupa kata sandi?</a
+                >
+              </div>
+
+              <!-- Login Button -->
+              <button
+                type="submit"
+                class="btn-gradient mb-4 w-full rounded-lg py-3 font-bold text-white"
+              >
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                <a href="index.html">Masuk</a>
+              </button>
+            </form>
+
+            <!-- Social Login -->
+            <div class="divider">
+              <span>atau lanjutkan dengan</span>
+            </div>
+
+            <div class="mb-6 grid grid-cols-3 gap-4">
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-google text-xl text-red-500"></i>
+              </button>
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-facebook text-xl text-blue-600"></i>
+              </button>
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-github text-xl text-slate-900"></i>
+              </button>
+            </div>
+
+            <!-- Switch to Register -->
+            <p class="text-center text-slate-600">
+              Belum punya akun?
+              <a href="register.html" class="font-semibold text-blue-600 hover:text-blue-700"
+                >Buat Satu</a
+              >
+            </p>
+          </div>
+
+          <!-- Register Form -->
+          <div id="registerForm" class="form-toggle hidden">
+            <h2 class="mb-2 text-3xl font-bold text-slate-900">Buat Akun</h2>
+            <p class="mb-8 text-slate-600">
+              Bergabunglah dengan Huni.id dan temukan rumah impian Anda
+            </p>
+
+            <div id="registerSuccess" class="success-message">
+              <i class="fas fa-check-circle mr-2"></i>
+              Akun dibuat! Mengalihkan ke login...
+            </div>
+
+            <!-- Social Register -->
+            <div class="divider">
+              <span>or signup with</span>
+            </div>
+
+            <div class="mb-6 grid grid-cols-3 gap-4">
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-google text-xl text-red-500"></i>
+              </button>
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-facebook text-xl text-blue-600"></i>
+              </button>
+              <button class="social-btn rounded-lg py-3 hover:shadow-md">
+                <i class="fab fa-github text-xl text-slate-900"></i>
+              </button>
+            </div>
+
+            <!-- Switch to Login -->
+            <p class="text-center text-slate-600">
+              Already have an account?
+              <button
+                type="button"
+                class="font-bold text-blue-600 hover:text-blue-700"
+                onclick="switchForm('login')"
+              >
+                Sign in
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

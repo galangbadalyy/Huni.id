@@ -2,42 +2,48 @@
 
 body {
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #f0f4ff 0%, #c7d2fe 100%);
 }
 
+/* Glassmorphism card */
 .glassmorphism {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.15);
 }
 
+/* Property card hover */
 .property-card {
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .property-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
 }
 
+/* Gradient text (blue) */
 .gradient-text {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+/* Search input focus */
 .search-input:focus {
   outline: none;
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
+/* Hero section gradient */
 .hero-gradient {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
 }
 
+/* Fade animation */
 .fade-in {
   animation: fadeIn 0.6s ease-in;
 }
